@@ -1,0 +1,37 @@
+.b-split-screen {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  }
+
+  .left-pane {
+    background-image: url("./assets/dog.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh
+  }
+  
+  @media screen and (min-width: 1024px) {
+    .left-pane {
+      width: 50%;
+    }
+  
+    .right-pane {
+      width: 50%;
+    }
+  }
+  
+  @media screen and (max-width: 1023px) {
+    .left-pane {
+      display: none;
+    }
+  
+    .right-pane {
+      width: 100%;
+    }
+  }
+  
+  .right-pane{
+    background-color:rgb(238, 238, 238);
+  }
