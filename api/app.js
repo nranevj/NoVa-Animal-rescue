@@ -15,6 +15,8 @@ db.once('open', () => console.log('Connected to Database'))
 app.use(express.json())
 const postsRouter = require('./routes/posts')
 
+app.use(express.static(__dirname + '/uploads'));
+
 // Tells server that when a route with this prefix hit, then redirect the request to the mentioned router
 app.use('/post', postsRouter)
 

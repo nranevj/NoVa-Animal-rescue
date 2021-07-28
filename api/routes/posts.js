@@ -40,6 +40,12 @@ router.get('/', cors(), async (req, res) => {
             console.log(err);
         }
         else{
+            Object.keys(docs).forEach(function(doc) {
+                if(docs[doc].postImage){
+                    let image = docs[doc].postImage;
+                    docs[doc].postImage = req.protocol + '://' + req.get('host') + '/' + image.replace(/.*\//,"");
+                }
+            });
             res.status(200).json(docs);   
         } 
     });
