@@ -352,7 +352,18 @@ export function Feed() {
       createNotification('success', 3000, "Story submitted successfully");
       setTimeout(hideModalForm,500);
       let id = res.data._id;
-      let p = getPost(id);
+
+      const apiUrl = 'http://localhost:3001/post/' + id;
+      axios.get(apiUrl)
+        .then(async (response) => {
+            let data = await response.data[0];
+            let newPost = post;
+            newPost.unshift(data);
+            setPostArray(newPost); 
+        })
+        .catch((err)=>{
+          console.log(err);
+        });
     })
     .catch((err) => {createNotification('error', 2000, "Issue submitting story:" + err);});
   } 
