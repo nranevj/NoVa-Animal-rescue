@@ -52,15 +52,20 @@ router.get('/', async (req, res) => {
 
 //Create a new post
 router.post('/', upload.single('postImage'), async (req, res) => {
-    const post =  new Post({
-        _id: new mongoose.Types.ObjectId(),
-        title: req.body.title,
-        postImage: req.file.path,
-        shortdesc: req.body.shortdesc,
-        longdesc: req.body.longdesc
-     });
+    try{ 
+        if(req.body && req.file === undefined) res.status(400).json({message: "Image not uploaded"})
+        if(!req.body.shortdesc) res.status(400).json({message: "Short description not provided"})
+        if(!req.body.longdesc) res.status(400).json({message: "Long description not provided"})
+        if(!req.body.title) res.status(400).json({message: "Title not provided"})
 
-     try{
+        const post =  new Post({
+            _id: new mongoose.Types.ObjectId(),
+            title: req.body.title,
+            postImage: req.file.path,
+            shortdesc: req.body.shortdesc,
+            longdesc: req.body.longdesc
+        });
+
        const newPost = await post.save();
        res.status(201).json(newPost);
      }

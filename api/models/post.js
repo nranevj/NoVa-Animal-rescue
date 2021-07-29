@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 const postSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    title: {type: String,required: true},
+    title: {type: String},
     date:{type: Date,required: true, default: Date.now()},
-    postImage:{type: String,required: true},
-    shortdesc:{type: String,required: true},
-    longdesc:{type: String,required: true}
+    postImage:{type: String},
+    shortdesc:{type: String},
+    longdesc:{type: String}
 })
 
 module.exports = mongoose.model('Post', postSchema)
