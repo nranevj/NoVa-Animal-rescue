@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');  //Browser can accept cross origin requests
 const router = express.Router();
 const Post = require('../models/post'); //Importing a model
 const mongoose = require('mongoose');
@@ -34,7 +33,7 @@ const upload = multer({
 })
 
 //Get all posts sorted by date in descending order
-router.get('/', cors(), async (req, res) => {
+router.get('/', async (req, res) => {
     const posts = await Post.find().sort([['date',-1]]).exec((err, docs) => {
         if(err){
             console.log(err);
@@ -52,7 +51,7 @@ router.get('/', cors(), async (req, res) => {
 })
 
 //Create a new post
-router.post('/', cors(), upload.single('postImage'), async (req, res) => {
+router.post('/', upload.single('postImage'), async (req, res) => {
     const post =  new Post({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
@@ -71,7 +70,7 @@ router.post('/', cors(), upload.single('postImage'), async (req, res) => {
 })
 
 //Update a post (one or more attributes)
-router.patch('/:id', cors(), (req, res) => {
+router.patch('/:id', (req, res) => {
     const filter = { '_id' : req.params.id};
     const update = req.body;
     Post.findOneAndUpdate(filter, { $set : update }, {new : true}, (err, doc) => {
@@ -85,7 +84,7 @@ router.patch('/:id', cors(), (req, res) => {
 })
 
 //Delete a post
-router.delete('/:id', cors(), (req, res) => {
+router.delete('/:id', (req, res) => {
     Post.findByIdAndRemove(req.params.id, (err, doc) => {
         if(err){
             res.status(204).send(err);

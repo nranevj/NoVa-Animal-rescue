@@ -4,6 +4,10 @@ const port = 3001
 const express = require('express')
 const app = express()
 
+//Browser can accept cross origin requests
+const cors = require('cors');
+app.use(cors());
+
 // Setting up mongodb connection
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser : true, useUnifiedTopology: true, useFindAndModify: false})
