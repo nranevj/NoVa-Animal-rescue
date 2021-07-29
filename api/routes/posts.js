@@ -50,6 +50,25 @@ router.get('/', async (req, res) => {
     });
 })
 
+//Get a post by id
+router.get('/:id', (req, res) => {
+
+    try{
+        Post.find({_id: req.params.id}, (err, doc) => {
+            if(err){
+                console.log(err);
+            }
+            else{
+                doc[0].postImage = req.protocol + '://' + req.get('host') + '/' + doc[0].postImage.replace(/.*\//,"");
+                res.status("200").json(doc)
+            }
+        })
+    }
+    catch(err){
+        res.status(500).json({ message: err.message });
+    }
+})
+
 //Create a new post
 router.post('/', upload.single('postImage'), async (req, res) => {
     try{ 
@@ -63,7 +82,8 @@ router.post('/', upload.single('postImage'), async (req, res) => {
             title: req.body.title,
             postImage: req.file.path,
             shortdesc: req.body.shortdesc,
-            longdesc: req.body.longdesc
+            longdesc: req.body.longdesc,
+            date: Date.now()
         });
 
        const newPost = await post.save();
