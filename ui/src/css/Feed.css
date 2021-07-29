@@ -1,0 +1,23 @@
+textarea {
+    resize: none
+}
+
+label{
+    margin-right: 15px;
+}
+
+input[type=text]{
+    height: 2vw;
+    width: 20vw;
+}
+
+table{
+    width: min-content;
+    display: inline-block;
+    padding-bottom: 3vw;
+}
+
+table tbody{
+    padding-top: 10vw;
+    height: 12vw;
+}
