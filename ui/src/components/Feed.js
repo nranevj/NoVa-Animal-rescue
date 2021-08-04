@@ -9,8 +9,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
 import { Pagination } from './Pagination';
@@ -138,9 +136,6 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -168,7 +163,6 @@ export function Feed() {
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [editForm, setEditForm] = useState(false);
-
   const [title, setTitle] = useState("");
   const [shortdesc, setShortDesc] = useState("");
   const [longdesc, setLongDesc] = useState("");
@@ -330,18 +324,6 @@ export function Feed() {
     });
   }
 
-  const getPost = (id) => {
-    setLoading(true);
-    const apiUrl = 'http://localhost:3001/post/' + id;
-    axios.get(apiUrl)
-        .then((response) => {
-            return response.data[0];
-        })
-    .catch((err)=>{
-        console.log(err);
-    });
-  }
-
   //Make a REST API call to add new post in DB with the provided data
   const submitStory = () => {
     let formData = getFormData();
@@ -352,7 +334,18 @@ export function Feed() {
       createNotification('success', 3000, "Story submitted successfully");
       setTimeout(hideModalForm,500);
       let id = res.data._id;
-      let p = getPost(id);
+
+      const apiUrl = 'http://localhost:3001/post/' + id;
+      axios.get(apiUrl)
+        .then(async (response) => {
+            let data = await response.data[0];
+            let newPost = post;
+            newPost.unshift(data);
+            setPostArray(newPost); 
+        })
+        .catch((err)=>{
+          console.log(err);
+        });
     })
     .catch((err) => {createNotification('error', 2000, "Issue submitting story:" + err);});
   } 
