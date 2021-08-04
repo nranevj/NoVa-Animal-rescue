@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
 import { Pagination } from './Pagination';
-import Link from '@material-ui/core/Link';
 import "../css/Feed.css";
 import Button from "@material-ui/core/Button";
 import Modal from '@material-ui/core/Modal';
